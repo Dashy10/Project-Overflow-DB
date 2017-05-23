@@ -4,14 +4,14 @@ CREATE DATABASE project_overflow_db;
 \c project_overflow_db
 
 
-DROP TABLE IF EXISTS subjects;
+DROP TABLE IF EXISTS subjects CASCADE;
 
 CREATE TABLE subjects
 (subject_id SERIAL PRIMARY KEY,
   subject TEXT
 );
 
-DROP TABLE IF EXISTS documentation;
+DROP TABLE IF EXISTS documentation CASCADE;
 
 CREATE TABLE documentation
 (topic_id SERIAL PRIMARY KEY,
@@ -22,7 +22,7 @@ CREATE TABLE documentation
   rel_tag_two int REFERENCES subjects(subject_id)
 );
 
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users CASCADE;
 
 CREATE TABLE users
 (user_id SERIAL PRIMARY KEY,
@@ -32,7 +32,7 @@ CREATE TABLE users
   email VARCHAR(255)
 );
 
-DROP TABLE IF EXISTS questions;
+DROP TABLE IF EXISTS questions CASCADE;
 
 CREATE TABLE questions
 (question_id SERIAL PRIMARY KEY,
@@ -42,7 +42,7 @@ user_id int REFERENCES users(user_id),
 topic_id int REFERENCES subjects(subject_id)
  );
 
-DROP TABLE IF EXISTS answers;
+DROP TABLE IF EXISTS answers CASCADE;
 
 CREATE TABLE answers
 (answer_id SERIAL PRIMARY KEY,
