@@ -177,58 +177,7 @@ deleteAnswer = (req,res,next) => {
   var answer_id = parseInt(req.params.answer_id);
   db.result('DELETE FROM answers WHERE answer_id=$1', answer_id)
 }
-//
-// getAllQuestionsWithAnswersBySubject = (req,res,next) => {
-//
-//   .then(function(data){
-//     res.status(200)
-//     .json({
-//
-//     });
-//   })
-//   .catch(function(err){
-//     return next(err);
-//   });
-// };
-//
-// getOneQuestionWithAllAnswers = (req,res,next) => {
-//
-// };
-//
-// getAllAnswers = (req,res,next) => {
-//   db.one('SELECT * FROM subjects WHERE ')
-// };
-//
-// getOneAnswer = (req,res,next) => {
-//
-// };
-//
-// // //////////Create//////
-// createQuestion = (req,res,next) => {
-//   db.none('INSERT INTO questions()')
-//
-// };
-//
-// createAnswer = (req,res,next) => {
-//
-// };
-//
-// // ////////Update//////
-// updateQuestion = (req,res,next) => {
-//
-// };
-//
-// updateAnswer = (req,res,next) => {
-//
-// };
-//
-// ////////////Delete///////
-//
-// deleteAnswer = (req,res,next) => {
-//   var answer_id = parseInt(req.params.answer_id);
-//   db.result('DELETE FROM answers where answer =$1',answer_id)
-//
-// };
+
 
 module.exports = {
   getAllDocumentation: getAllDocumentation,
@@ -244,27 +193,32 @@ module.exports = {
 
 };
 
+getAllQuestionsWithAnswersBySubject = (req,res,next) => {
+  db.task(t => {
+    t.batch([
+      t.one(),
+      t.one(),
+      t.any()
+    ]);
+  })
+  .then(data => {
+    res.status(200)
+    .json({
+      status: 'success',
+      subject: data[0],
+      question: data[1],
+      answer: data[2]
+    });
+  })
+  .catch(function(err){
+    return next(err);
+  })
+}
 
-// db.task (t => {
-// t.batch([
-// t.one(question)
-// t.any(answers)
-// ])
-// .then(data =>{
-//  res.status(200)
-//    .json({
-//      status: 'success'
-//      question: data[0]
-//      answers: data[1]
-//    })
-// })
-//
-// });
-//
-// };
 
 
-// //Select all the question(s) in questions table;
+
+// //Select the question(s) in questions table;
 // and corresponding answers in answers table;
 //  where question_id of answers table=question_id of questions table;
 //   and where topic_id of questions table=topic_id of subjects table;
