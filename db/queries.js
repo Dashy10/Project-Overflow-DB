@@ -33,13 +33,11 @@ getAllDocumentation = (req,res,next) => {
 };
 
 getAllQuestionsWithAnswersBySubject = (req,res,next) => {
-  db.any('Select all the question(s) in questions table and corresponding answers in answers table where question_id of answers table=question_id of questions table and where topic_id of questions table=topic_id of subjects table')
+
   .then(function(data){
     res.status(200)
     .json({
-      status: 'success',
-      data: data,
-      message: 'Success in querying all questions by subject'
+      
     });
   })
   .catch(function(err){
@@ -47,11 +45,11 @@ getAllQuestionsWithAnswersBySubject = (req,res,next) => {
   });
 };
 
-getOneQuestion = (req,res,next) => {
+getOneQuestionWithAllAnswers = (req,res,next) => {
 
 };
 
-getAllAnswersBySubject = (req,res,next) => {
+getAllAnswers = (req,res,next) => {
   db.one('SELECT * FROM subjects WHERE ')
 };
 
@@ -114,4 +112,4 @@ module.exports = {
 // //Select all the question(s) in questions table;
 // and corresponding answers in answers table;
 //  where question_id of answers table=question_id of questions table;
-//   and where topic_id of questions table=topic_id of subjects table'
+//   and where topic_id of questions table=topic_id of subjects table;
