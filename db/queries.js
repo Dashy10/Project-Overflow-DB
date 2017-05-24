@@ -59,11 +59,11 @@ createAnswer = (req,res,next) => {
 getAllQuestionsWithAnswersBySubject = (req,res,next) => {
   db.task(t => {
     var subject_id = parseInt(req.params.subject_id)
-    console.log(subject_id);
     var topic_id = parseInt(req.params.topic_id)
+    var date_added = (req.params.date_added)
     var q1 = t.one('SELECT * FROM subjects WHERE subject_id=$1',[subject_id])
-    var q2 = t.any('SELECT * FROM questions WHERE topic_id=$1',[subject_id])
-    var q3 = t.any('SELECT * FROM answers WHERE topic_id=$1',[subject_id])
+    var q2 = t.any('SELECT * FROM questions WHERE topic_id=$1 ORDER BY date_added DESC',[subject_id])
+    var q3 = t.any('SELECT * FROM answers WHERE topic_id=$1 ORDER BY date_added DESC',[subject_id])
     return t.batch([q1,q2,q3]);
   })
   .then(data => {
@@ -72,15 +72,39 @@ getAllQuestionsWithAnswersBySubject = (req,res,next) => {
     .json({
       status: 'success',
       subject: data[0],
-      question: data[1],
-      answer: data[2],
+      questions: data[1],
+      answers: data[2],
     });
   })
   .catch(function(err){
-    console.log(err);
     return next(err);
   })
-}
+};
+
+getOneQuestionWithAnswersBySubject = (req,res,next) => {
+  db.task(t => {
+    var subject_id = parseInt(req.params.subject_id)
+    var question_id = parseInt(req.params.question_id)
+    var topic_id = parseInt(req.params.topic_id)
+    var date_added = (req.params.date_added)
+    // var q1 = t.one('SELECT * FROM subjects WHERE subject_id=$1',[subject_id])
+    var q2 = t.any('SELECT * FROM questions WHERE question_id=$1 ORDER BY date_added DESC',[question_id])
+    var q3 = t.any('SELECT * FROM answers WHERE question_id=$1 ORDER BY date_added DESC',[question_id])
+    return t.batch([q2,q3]);
+  })
+  .then(data => {
+    res.status(200)
+    .json({
+      status: 'success',
+      // subject: data[0],
+      question: data[0],
+      answer: data[1],
+    });
+  })
+  .catch(function(err){
+    return next(err);
+  })
+};
 
 getAllDocumentation = (req,res,next) => {
   db.any('SELECT * FROM documentation')
@@ -219,13 +243,6 @@ module.exports = {
   updateQuestion: updateQuestion,
   updateAnswer: updateAnswer,
   getAllQuestionsWithAnswersBySubject: getAllQuestionsWithAnswersBySubject,
+  getOneQuestionWithAnswersBySubject: getOneQuestionWithAnswersBySubject,
 
 };
-
-
-
-
-// //Select the question(s) in questions table;
-// and corresponding answers in answers table;
-//  where question_id of answers table=question_id of questions table;
-//   and where topic_id of questions table=topic_id of subjects table;

@@ -31,7 +31,7 @@ router.patch('/questions/:question_id', db.updateQuestion);
 // // get all the questions with all their corresponding answers organized by subject
 router.get('/QA/:subject_id/', db.getAllQuestionsWithAnswersBySubject);
 // // get one question with corresponding answers organized by subject
-// router.get('/questions/:question_id/:subject', db.getOneQuestionWithAnswersBySubject);
+router.get('/QAS/:question_id', db.getOneQuestionWithAnswersBySubject);
 //
 //
 // // ANSWERS
