@@ -56,6 +56,32 @@ createAnswer = (req,res,next) => {
 /////////////////////////////
 ////////////////////////////
 
+getAllQuestionsWithAnswersBySubject = (req,res,next) => {
+  db.task(t => {
+    var subject_id = parseInt(req.params.subject_id)
+    console.log(subject_id);
+    var topic_id = parseInt(req.params.topic_id)
+    var q1 = t.one('SELECT * FROM subjects WHERE subject_id=$1',[subject_id])
+    var q2 = t.any('SELECT * FROM questions WHERE topic_id=$1',[subject_id])
+    var q3 = t.any('SELECT * FROM answers WHERE topic_id=$1',[subject_id])
+    return t.batch([q1,q2,q3]);
+  })
+  .then(data => {
+    console.log(data);
+    res.status(200)
+    .json({
+      status: 'success',
+      subject: data[0],
+      question: data[1],
+      answer: data[2],
+    });
+  })
+  .catch(function(err){
+    console.log(err);
+    return next(err);
+  })
+}
+
 getAllDocumentation = (req,res,next) => {
   db.any('SELECT * FROM documentation')
   .then(function(data){
@@ -179,6 +205,8 @@ deleteAnswer = (req,res,next) => {
 }
 
 
+
+
 module.exports = {
   getAllDocumentation: getAllDocumentation,
   getAllQuestions: getAllQuestions,
@@ -190,30 +218,9 @@ module.exports = {
   createAnswer: createAnswer,
   updateQuestion: updateQuestion,
   updateAnswer: updateAnswer,
+  getAllQuestionsWithAnswersBySubject: getAllQuestionsWithAnswersBySubject,
 
 };
-
-getAllQuestionsWithAnswersBySubject = (req,res,next) => {
-  db.task(t => {
-    t.batch([
-      t.one(),
-      t.one(),
-      t.any()
-    ]);
-  })
-  .then(data => {
-    res.status(200)
-    .json({
-      status: 'success',
-      subject: data[0],
-      question: data[1],
-      answer: data[2]
-    });
-  })
-  .catch(function(err){
-    return next(err);
-  })
-}
 
 
 

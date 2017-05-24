@@ -47,6 +47,7 @@ DROP TABLE IF EXISTS answers CASCADE;
 CREATE TABLE answers
 (answer_id SERIAL PRIMARY KEY,
   question_id int REFERENCES questions(question_id),
+  topic_id int REFERENCES subjects(subject_id),
   user_id int REFERENCES users(user_id),
   answer TEXT,
   date_added timestamp default now()

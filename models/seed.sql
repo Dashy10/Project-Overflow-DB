@@ -25,9 +25,9 @@ INSERT INTO questions(question,topic_id)
   ('What really is JavaScript?',1),
   ('What is Express?',2);
 
-INSERT INTO answers(question_id,answer)
+INSERT INTO answers(question_id,answer,topic_id)
     VALUES
-  (1, 'JavaScript is a programming language dude'),
-  (1, 'this is another answer for the first javascript question'),
-  (2, 'JavaScript is really a programming language dude'),
-  (3, 'Express is a framework for node.js dude');
+  (1, 'JavaScript is a programming language dude',1),
+  (1, 'this is another answer for the first javascript question',1),
+  (2, 'JavaScript is really a programming language dude',1),
+  (3, 'Express is a framework for node.js dude',2);
