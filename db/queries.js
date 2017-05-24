@@ -31,62 +31,62 @@ getAllDocumentation = (req,res,next) => {
     return next(err);
   });
 };
-
-getAllQuestionsWithAnswersBySubject = (req,res,next) => {
-
-  .then(function(data){
-    res.status(200)
-    .json({
-      
-    });
-  })
-  .catch(function(err){
-    return next(err);
-  });
-};
-
-getOneQuestionWithAllAnswers = (req,res,next) => {
-
-};
-
-getAllAnswers = (req,res,next) => {
-  db.one('SELECT * FROM subjects WHERE ')
-};
-
-getOneAnswer = (req,res,next) => {
-
-};
-
-// //////////Create//////
-createQuestion = (req,res,next) => {
-  db.none('INSERT INTO questions()')
-
-};
-
-createAnswer = (req,res,next) => {
-
-};
-
-// ////////Update//////
-updateQuestion = (req,res,next) => {
-
-};
-
-updateAnswer = (req,res,next) => {
-
-};
-
-////////////Delete///////
-
-deleteAnswer = (req,res,next) => {
-  var answer_id = parseInt(req.params.answer_id);
-  db.result('DELETE FROM answers where answer =$1',answer_id)
-
-};
+//
+// getAllQuestionsWithAnswersBySubject = (req,res,next) => {
+//
+//   .then(function(data){
+//     res.status(200)
+//     .json({
+//
+//     });
+//   })
+//   .catch(function(err){
+//     return next(err);
+//   });
+// };
+//
+// getOneQuestionWithAllAnswers = (req,res,next) => {
+//
+// };
+//
+// getAllAnswers = (req,res,next) => {
+//   db.one('SELECT * FROM subjects WHERE ')
+// };
+//
+// getOneAnswer = (req,res,next) => {
+//
+// };
+//
+// // //////////Create//////
+// createQuestion = (req,res,next) => {
+//   db.none('INSERT INTO questions()')
+//
+// };
+//
+// createAnswer = (req,res,next) => {
+//
+// };
+//
+// // ////////Update//////
+// updateQuestion = (req,res,next) => {
+//
+// };
+//
+// updateAnswer = (req,res,next) => {
+//
+// };
+//
+// ////////////Delete///////
+//
+// deleteAnswer = (req,res,next) => {
+//   var answer_id = parseInt(req.params.answer_id);
+//   db.result('DELETE FROM answers where answer =$1',answer_id)
+//
+// };
 
 module.exports = {
   getAllDocumentation: getAllDocumentation,
-  deleteAnswer: deleteAnswer,
+//  deleteAnswer: deleteAnswer,
 };
 
 
