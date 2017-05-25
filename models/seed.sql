@@ -10,13 +10,19 @@ INSERT INTO subjects(subject)
 
 INSERT INTO documentation(topic,url,main_tag,rel_tag_one,rel_tag_two)
     VALUES
-  ('javascript','https://developer.mozilla.org/en-US/search?q=JAVASCRIPT&topic=apps&topic=html&topic=css&topic=js&topic=api&topic=canvas&topic=svg&topic=webgl&topic=mobile&topic=webdev&topic=http&topic=webext',1,3,4),
-  ('node.js','https://developer.mozilla.org/en-US/search?q=Node.js&topic=api&topic=css&topic=canvas&topic=html&topic=http&topic=js&topic=mobile&topic=apps&topic=svg&topic=webdev&topic=webext&topic=webgl',4,1,2),
-  ('express','https://developer.mozilla.org/en-US/search?q=Express.js&topic=api&topic=css&topic=canvas&topic=html&topic=http&topic=js&topic=mobile&topic=apps&topic=svg&topic=webdev&topic=webext&topic=webgl',2,4,1);
+  ('Javascript closures','https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures',1,3,4),
+  ('Javascript "this" keyword','https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this',1,3,4),
+  ('Javascript callback functions','https://developer.mozilla.org/en-US/docs/Mozilla/js-ctypes/Using_js-ctypes/Declaring_and_Using_Callbacks',1,3,4),
+  ('Javascript objects','https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object',1,3,4),
+  ('Javascript prototypes','https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/prototype',1,3,4),
+  ('node.js official documentation','https://nodejs.org/en/docs/guides/',4,1,2),
+  ('Express official documentation','https://expressjs.com/en/guide/routing.html',2,4,1),
+  ('Writing Middleware for Express','https://stormpath.com/blog/how-to-write-middleware-for-express-apps',2,4,1);
 
 INSERT INTO documentation(topic,url,main_tag,rel_tag_one)
     VALUES
-  ('react','https://facebook.github.io/react/docs/state-and-lifecycle.html',3,1);
+  ('React tutorial','https://facebook.github.io/react/tutorial/tutorial.html',3,1),
+  ('React official documentation','https://facebook.github.io/react/docs/hello-world.html',3,1);
 
 
 INSERT INTO questions(question,topic_id)
@@ -25,7 +31,7 @@ INSERT INTO questions(question,topic_id)
   ('What really is JavaScript?',1),
   ('What is Express?',2);
 
-INSERT INTO answers(question_id,answer,topic_id)
+INSERT INTO answers(qquestion_id,answer,qtopic_id)
     VALUES
   (1, 'JavaScript is a programming language dude',1),
   (1, 'this is another answer for the first javascript question',1),

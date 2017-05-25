@@ -57,15 +57,18 @@ createAnswer = (req,res,next) => {
 ////////////////////////////
 
 getAllQuestionsWithAnswersBySubject = (req,res,next) => {
-  db.task(t => {
-    var subject_id = parseInt(req.params.subject_id)
-    var topic_id = parseInt(req.params.topic_id)
-    var date_added = (req.params.date_added)
-    var q1 = t.one('SELECT * FROM subjects WHERE subject_id=$1',[subject_id])
-    var q2 = t.any('SELECT * FROM questions WHERE topic_id=$1 ORDER BY date_added DESC',[subject_id])
-    var q3 = t.any('SELECT * FROM answers WHERE topic_id=$1 ORDER BY date_added DESC',[subject_id])
-    return t.batch([q1,q2,q3]);
-  })
+  // db.task(t => {
+  //   var subject_id = parseInt(req.params.subject_id)
+  //   var topic_id = parseInt(req.params.topic_id)
+  //   var date_added = (req.params.date_added)
+  //   var q1 = t.one('SELECT * FROM subjects WHERE subject_id=$1',[subject_id])
+  //   var q2 = t.any('SELECT * FROM questions WHERE topic_id=$1 ORDER BY date_added DESC',[subject_id])
+  //   var q3 = t.any('SELECT * FROM answers WHERE topic_id=$1 ORDER BY date_added DESC',[subject_id])
+  //   var dbArray = [q1,q2,q3]
+  //   return t.batch([...dbArray]);
+  // })
+  var subject_id = parseInt(req.params.subject_id)
+  db.any('SELECT * FROM questions JOIN answers ON questions.question_id = answers.qquestion_id WHERE qtopic_id=$1', [subject_id])
   .then(data => {
     console.log(data);
     res.status(200)
