@@ -74,9 +74,10 @@ getAllQuestionsWithAnswersBySubject = (req,res,next) => {
     res.status(200)
     .json({
       status: 'success',
-      subject: data[0],
-      questions: data[1],
-      answers: data[2],
+      data: data
+      // subject: data[0],
+      // questions: data[1],
+      // answers: data[2],
     });
   })
   .catch(function(err){

@@ -25,13 +25,13 @@ INSERT INTO documentation(topic,url,main_tag,rel_tag_one)
   ('React official documentation','https://facebook.github.io/react/docs/hello-world.html',3,1);
 
 
-INSERT INTO questions(question,topic_id)
+INSERT INTO questions(question,qtopic_id)
     VALUES
   ('What is JavaScript?',1),
   ('What really is JavaScript?',1),
   ('What is Express?',2);
 
-INSERT INTO answers(qquestion_id,answer,qtopic_id)
+INSERT INTO answers(aquestion_id,answer,atopic_id)
     VALUES
   (1, 'JavaScript is a programming language dude',1),
   (1, 'this is another answer for the first javascript question',1),
