@@ -19,8 +19,8 @@ var db = pgp(connString);
 ////////////////////////////////////
 //////////////////////////////////
 createQuestion = (req,res,next) => {
-  db.none('INSERT INTO questions(question, topic_id)' +
-"values(${question}, ${topic_id})", req.body)
+  db.none('INSERT INTO questions(question, qtopic_id)' +
+"values(${question}, ${qtopic_id})", req.body)
 .then(function (data) {
     res.status(200)
       .json({
@@ -35,8 +35,8 @@ createQuestion = (req,res,next) => {
 }
 
 createAnswer = (req,res,next) => {
-  db.none('INSERT INTO answers(answer, question_id)' +
-  "values(${answer}, ${question_id})", req.body)
+  db.none('INSERT INTO answers(answer, aquestion_id)' +
+  "values(${answer}, ${aquestion_id})", req.body)
   .then(function (data){
     res.status(200)
     .json({
@@ -87,13 +87,13 @@ getAllQuestionsWithAnswersBySubject = (req,res,next) => {
 
 getOneQuestionWithAnswersBySubject = (req,res,next) => {
   db.task(t => {
-    var subject_id = parseInt(req.params.subject_id)
-    var question_id = parseInt(req.params.question_id)
-    var topic_id = parseInt(req.params.topic_id)
-    var date_added = (req.params.date_added)
+    // var subject_id = parseInt(req.params.subject_id)
+    var qquestion_id = parseInt(req.params.qquestion_id)
+    // var topic_id = parseInt(req.params.topic_id)
+    // var date_added = (req.params.date_added)
     // var q1 = t.one('SELECT * FROM subjects WHERE subject_id=$1',[subject_id])
-    var q2 = t.any('SELECT * FROM questions WHERE question_id=$1 ORDER BY date_added DESC',[question_id])
-    var q3 = t.any('SELECT * FROM answers WHERE question_id=$1 ORDER BY date_added DESC',[question_id])
+    var q2 = t.any('SELECT * FROM questions WHERE qquestion_id=$1 ORDER BY date_added DESC',[qquestion_id])
+    var q3 = t.any('SELECT * FROM answers WHERE aquestion_id=$1 ORDER BY date_added DESC',[qquestion_id])
     return t.batch([q2,q3]);
   })
   .then(data => {
@@ -141,8 +141,8 @@ getAllQuestions = (req,res,next) => {
 };
 
 getOneQuestion = (req,res,next) => {
-  var question_id = parseInt(req.params.question_id);
-  db.one('SELECT * FROM questions WHERE question_id=$1', question_id)
+  var question_id = parseInt(req.params.qquestion_id);
+  db.one('SELECT * FROM questions WHERE qquestion_id=$1', qquestion_id)
   .then(function(data){
     res.status(200)
     .json({
@@ -192,8 +192,8 @@ getOneAnswer = (req,res,next) => {
 //////////////////////////
 //////////////////////////
 updateQuestion = (req,res,next) => {
-  db.none('UPDATE questions SET question=$1, topic_id=$2',
-  [req.body.question, req.body.topic_id])
+  db.none('UPDATE questions SET question=$1, qtopic_id=$2',
+  [req.body.question, req.body.qtopic_id])
   .then(function(){
     res.status(200)
     .json({
@@ -207,8 +207,8 @@ updateQuestion = (req,res,next) => {
 }
 
 updateAnswer = (req,res,next) => {
-  db.none('UPDATE answers SET answer=$1, question_id=$2',
-  [req.body.answer, req.body.question_id])
+  db.none('UPDATE answers SET answer=$1, aquestion_id=$2',
+  [req.body.answer, req.body.aquestion_id])
   .then(function(){
     res.status(200)
     .json({
@@ -250,3 +250,7 @@ module.exports = {
   getOneQuestionWithAnswersBySubject: getOneQuestionWithAnswersBySubject,
 
 };
+
+
+////asdsadsadsadasdasdasdasds
+///sdasdadsdas
