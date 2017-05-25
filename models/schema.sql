@@ -35,7 +35,7 @@ CREATE TABLE users
 DROP TABLE IF EXISTS questions CASCADE;
 
 CREATE TABLE questions
-(question_id SERIAL PRIMARY KEY,
+(qquestion_id SERIAL PRIMARY KEY,
 qdate_added timestamp default now(),
 question TEXT,
 quser_id int REFERENCES users(user_id),
@@ -46,7 +46,7 @@ DROP TABLE IF EXISTS answers CASCADE;
 
 CREATE TABLE answers
 (answer_id SERIAL PRIMARY KEY,
-  aquestion_id int REFERENCES questions(question_id),
+  aquestion_id int REFERENCES questions(qquestion_id),
   atopic_id int REFERENCES subjects(subject_id),
   auser_id int REFERENCES users(user_id),
   answer TEXT,
