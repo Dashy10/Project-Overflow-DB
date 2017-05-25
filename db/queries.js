@@ -68,7 +68,7 @@ getAllQuestionsWithAnswersBySubject = (req,res,next) => {
   //   return t.batch([...dbArray]);
   // })
   var subject_id = parseInt(req.params.subject_id)
-  db.any('SELECT * FROM questions JOIN answers ON questions.question_id = answers.qquestion_id WHERE qtopic_id=$1', [subject_id])
+  db.any('SELECT * FROM questions JOIN answers ON questions.qquestion_id = answers.aquestion_id WHERE qtopic_id=$1', [subject_id])
   .then(data => {
     console.log(data);
     res.status(200)

@@ -37,3 +37,6 @@ INSERT INTO answers(aquestion_id,answer,atopic_id)
   (1, 'this is another answer for the first javascript question',1),
   (2, 'JavaScript is really a programming language dude',1),
   (3, 'Express is a framework for node.js dude',2);
+
+
+  -- opsdajoipasjdopadajspodasdpoasjpo
