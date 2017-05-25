@@ -15,6 +15,10 @@ router.get('/', function(req, res, next) {
 // DOCUMENTATION
 // all the documentation stored on this route
 router.get('/documentation', db.getAllDocumentation);
+router.get('/documentation/javascript', db.getAllJavaScriptDocumentation);
+router.get('/documentation/nodejs', db.getAllNodeDocumentation);
+router.get('/documentation/express', db.getAllExpressDocumentation);
+router.get('/documentation/react', db.getAllReactDocumentation);
 
 // QUESTIONS
 // all the questions are stored on this route

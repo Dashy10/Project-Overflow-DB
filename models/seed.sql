@@ -8,21 +8,21 @@ INSERT INTO subjects(subject)
   ('react'),
   ('node.js');
 
-INSERT INTO documentation(topic,url,main_tag,rel_tag_one,rel_tag_two)
+INSERT INTO documentation(main_topic,topic,url,main_tag,rel_tag_one,rel_tag_two)
     VALUES
-  ('Javascript closures','https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures',1,3,4),
-  ('Javascript "this" keyword','https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this',1,3,4),
-  ('Javascript callback functions','https://developer.mozilla.org/en-US/docs/Mozilla/js-ctypes/Using_js-ctypes/Declaring_and_Using_Callbacks',1,3,4),
-  ('Javascript objects','https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object',1,3,4),
-  ('Javascript prototypes','https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/prototype',1,3,4),
-  ('node.js official documentation','https://nodejs.org/en/docs/guides/',4,1,2),
-  ('Express official documentation','https://expressjs.com/en/guide/routing.html',2,4,1),
-  ('Writing Middleware for Express','https://stormpath.com/blog/how-to-write-middleware-for-express-apps',2,4,1);
+  ('Javascript','Javascript closures','https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures',1,3,4),
+  ('JavaScript','Javascript "this" keyword','https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this',1,3,4),
+  ('JavaScript','Javascript callback functions','https://developer.mozilla.org/en-US/docs/Mozilla/js-ctypes/Using_js-ctypes/Declaring_and_Using_Callbacks',1,3,4),
+  ('JavaScript','Javascript objects','https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object',1,3,4),
+  ('JavaScript','Javascript prototypes','https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/prototype',1,3,4),
+  ('Node.js','node.js official documentation','https://nodejs.org/en/docs/guides/',4,1,2),
+  ('Express.js','Express official documentation','https://expressjs.com/en/guide/routing.html',2,4,1),
+  ('Express.js','Writing Middleware for Express','https://stormpath.com/blog/how-to-write-middleware-for-express-apps',2,4,1);
 
-INSERT INTO documentation(topic,url,main_tag,rel_tag_one)
+INSERT INTO documentation(main_topic,topic,url,main_tag,rel_tag_one)
     VALUES
-  ('React tutorial','https://facebook.github.io/react/tutorial/tutorial.html',3,1),
-  ('React official documentation','https://facebook.github.io/react/docs/hello-world.html',3,1);
+  ('React.js','React tutorial','https://facebook.github.io/react/tutorial/tutorial.html',3,1),
+  ('React.js','React official documentation','https://facebook.github.io/react/docs/hello-world.html',3,1);
 
 
 INSERT INTO questions(question,qtopic_id)

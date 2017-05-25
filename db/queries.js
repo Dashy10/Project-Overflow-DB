@@ -125,6 +125,66 @@ getAllDocumentation = (req,res,next) => {
   });
 };
 
+getAllJavaScriptDocumentation = (req,res,next) => {
+  db.any('SELECT * FROM documentation WHERE main_tag=1')
+    .then(function(data){
+      res.status(200)
+      .json({
+        status:'success',
+        data: data,
+        message: 'Success in querying all javascript documentation'
+      });
+    })
+    .catch(function(err){
+      return next(err);
+    });
+};
+
+getAllNodeDocumentation = (req,res,next) => {
+  db.any('SELECT * FROM documentation WHERE main_tag=4')
+    .then(function(data){
+      res.status(200)
+      .json({
+        status:'success',
+        data: data,
+        message: 'Success in querying all node documentation'
+      });
+    })
+    .catch(function(err){
+      return next(err);
+    });
+};
+
+getAllExpressDocumentation = (req,res,next) => {
+  db.any('SELECT * FROM documentation WHERE main_tag=2')
+    .then(function(data){
+      res.status(200)
+      .json({
+        status:'success',
+        data: data,
+        message: 'Success in querying all express documentation'
+      });
+    })
+    .catch(function(err){
+      return next(err);
+    });
+};
+
+getAllReactDocumentation = (req,res,next) => {
+  db.any('SELECT * FROM documentation WHERE main_tag=3')
+    .then(function(data){
+      res.status(200)
+      .json({
+        status:'success',
+        data: data,
+        message: 'Success in querying all react documentation'
+      });
+    })
+    .catch(function(err){
+      return next(err);
+    });
+};
+
 getAllQuestions = (req,res,next) => {
   db.any('SELECT * FROM questions')
   .then(function(data){
@@ -248,6 +308,10 @@ module.exports = {
   updateAnswer: updateAnswer,
   getAllQuestionsWithAnswersBySubject: getAllQuestionsWithAnswersBySubject,
   getOneQuestionWithAnswersBySubject: getOneQuestionWithAnswersBySubject,
+  getAllJavaScriptDocumentation: getAllJavaScriptDocumentation,
+  getAllNodeDocumentation: getAllNodeDocumentation,
+  getAllExpressDocumentation: getAllExpressDocumentation,
+  getAllReactDocumentation: getAllReactDocumentation,
 
 };
 

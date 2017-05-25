@@ -15,6 +15,7 @@ DROP TABLE IF EXISTS documentation CASCADE;
 
 CREATE TABLE documentation
 (topic_id SERIAL PRIMARY KEY,
+  main_topic TEXT,
   topic VARCHAR(255),
   url TEXT,
   main_tag int REFERENCES subjects(subject_id),
