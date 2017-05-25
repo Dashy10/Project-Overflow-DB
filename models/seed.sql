@@ -16,6 +16,7 @@ INSERT INTO documentation(main_topic,topic,url,main_tag,rel_tag_one,rel_tag_two)
   ('JavaScript','Javascript objects','https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object',1,3,4),
   ('JavaScript','Javascript prototypes','https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/prototype',1,3,4),
   ('Node.js','node.js official documentation','https://nodejs.org/en/docs/guides/',4,1,2),
+  ('Node.js','node.js beginner tutorial','https://www.airpair.com/javascript/node-js-tutorial',4,1,2),
   ('Express.js','Express official documentation','https://expressjs.com/en/guide/routing.html',2,4,1),
   ('Express.js','Writing Middleware for Express','https://stormpath.com/blog/how-to-write-middleware-for-express-apps',2,4,1);
 
