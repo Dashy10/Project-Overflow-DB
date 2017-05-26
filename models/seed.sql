@@ -30,14 +30,18 @@ INSERT INTO questions(question,qtopic_id)
     VALUES
   ('What is JavaScript?',1),
   ('What really is JavaScript?',1),
-  ('What is Express?',2);
+  ('What is Express?',2),
+  ('What is React?',3),
+  ('What is Node.js?',4);
 
 INSERT INTO answers(aquestion_id,answer,atopic_id)
     VALUES
   (1, 'JavaScript is a programming language dude',1),
   (1, 'this is another answer for the first javascript question',1),
   (2, 'JavaScript is really a programming language dude',1),
-  (3, 'Express is a framework for node.js dude',2);
+  (3, 'Express is a framework for node.js dude',2),
+  (4, 'React is stoopid',3),
+  (5, 'Node.js is a test',4);
 
 
   -- opsdajoipasjdopadajspodasdpoasjpo
