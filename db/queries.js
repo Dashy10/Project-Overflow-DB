@@ -201,7 +201,7 @@ getAllQuestions = (req,res,next) => {
 };
 
 getOneQuestion = (req,res,next) => {
-  var question_id = parseInt(req.params.qquestion_id);
+  var qquestion_id = parseInt(req.params.qquestion_id);
   db.one('SELECT * FROM questions WHERE qquestion_id=$1', qquestion_id)
   .then(function(data){
     res.status(200)

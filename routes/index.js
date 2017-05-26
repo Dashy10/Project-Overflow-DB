@@ -26,9 +26,9 @@ router.get('/questions', db.getAllQuestions);
 // // post a question that will be stored in this route
 router.post('/questions',db.createQuestion);
 // // get one question based on its id
-router.get('/questions/:question_id', db.getOneQuestion);
+router.get('/questions/:qquestion_id', db.getOneQuestion);
 // // update one question based on its id
-router.patch('/questions/:question_id', db.updateQuestion);
+router.patch('/questions/:qquestion_id', db.updateQuestion);
 //
 //
 // // QUESTIONS + ANSWERS ORGANIZED BY SUBJECT
