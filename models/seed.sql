@@ -38,6 +38,7 @@ INSERT INTO answers(aquestion_id,answer,atopic_id)
     VALUES
   (1, 'JavaScript is a programming language dude',1),
   (1, 'this is another answer for the first javascript question',1),
+  (1, 'this is a third answer for the first javascript question',1),
   (2, 'JavaScript is really a programming language dude',1),
   (3, 'Express is a framework for node.js dude',2),
   (4, 'React is stoopid',3),
