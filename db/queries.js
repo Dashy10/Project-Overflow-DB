@@ -33,7 +33,7 @@ createQuestion = (req,res,next) => {
 // "values(${question}, ${qtopic_id})", req.body)
 db.task(t => {
   var q1 = t.none('INSERT INTO questions(question, qtopic_id)' + "values(${question}, ${qtopic_id})", req.body)
-  var q2 = t.none('INSERT INTO answers(aquestion_id)' + "values(${aquestion_id})",req.body)
+  var q2 = t.none('INSERT INTO answers(aquestion_id,atopic_id)' + "values(${aquestion_id}, ${atopic_id})",req.body)
   t.batch([q1,q2])
 })
 .then(function (data) {
@@ -75,7 +75,7 @@ getALlQuestionsBySubject = (req,res,next) => {
   db.any('SELECT * FROM questions WHERE qtopic_id=$1',[qquestion_id])
 }
 
-getAllQuestionsWithAnswersBySubject = (req,res,next) => {
+getAllQuestionsWithAnswers= (req,res,next) => {
   // function displayArtists(req, res, next){
   //     console.log('display artists')
   //     db.any('DROP VIEW IF EXISTS compiled; CREATE VIEW compiled AS SELECT * FROM artists, genres WHERE (genres.idG = artists.genre_id); SELECT * FROM compiled ORDER BY idA DESC;')
@@ -88,7 +88,7 @@ getAllQuestionsWithAnswersBySubject = (req,res,next) => {
   //     });
   // };
 
-  // var subject_id = parseInt(req.params.subject_id)
+  // var qtopic_id = parseInt(req.params.qtopic_id)
   db.any('DROP VIEW IF EXISTS compiled; CREATE VIEW compiled AS SELECT * FROM questions, answers WHERE (questions.qquestion_id = answers.aquestion_id); SELECT * FROM compiled')
   // 'SELECT * FROM questions; SELECT * FROM answers; JOIN answers ON questions.qquestion_id = answers.aquestion_id WHERE qtopic_id=$1'
   .then(data => {
@@ -100,6 +100,28 @@ getAllQuestionsWithAnswersBySubject = (req,res,next) => {
       // subject: data[0],
       // questions: data[1],
       // answers: data[2],
+    });
+  })
+  .catch(function(err){
+    return next(err);
+  })
+};
+
+getAllQuestionsWithAnswersBySubject= (req,res,next) => {
+  db.task(t => {
+  var subject_id= parseInt(req.params.subject_id)
+  var q1 = db.any('DROP VIEW IF EXISTS compiled; CREATE VIEW compiled AS SELECT * FROM questions, answers WHERE questions.qquestion_id = answers.aquestion_id')
+  var q2 = db.any('SELECT * FROM compiled WHERE qtopic_id=$1',[subject_id])
+  return t.batch([q1,q2])
+
+  })
+  // 'SELECT * FROM questions; SELECT * FROM answers; JOIN answers ON questions.qquestion_id = answers.aquestion_id WHERE qtopic_id=$1'
+  .then(data => {
+    console.log('This is data ======>',data);
+    res.status(200)
+    .json({
+      status: 'success',
+      data: data
     });
   })
   .catch(function(err){
@@ -337,6 +359,7 @@ module.exports = {
   createAnswer: createAnswer,
   updateQuestion: updateQuestion,
   updateAnswer: updateAnswer,
+  getAllQuestionsWithAnswers: getAllQuestionsWithAnswers,
   getAllQuestionsWithAnswersBySubject: getAllQuestionsWithAnswersBySubject,
   getOneQuestionWithAnswersBySubject: getOneQuestionWithAnswersBySubject,
   getAllJavaScriptDocumentation: getAllJavaScriptDocumentation,
