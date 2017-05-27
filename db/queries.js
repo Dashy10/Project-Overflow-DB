@@ -76,17 +76,7 @@ getALlQuestionsBySubject = (req,res,next) => {
 }
 
 getAllQuestionsWithAnswers= (req,res,next) => {
-  // function displayArtists(req, res, next){
-  //     console.log('display artists')
-  //     db.any('DROP VIEW IF EXISTS compiled; CREATE VIEW compiled AS SELECT * FROM artists, genres WHERE (genres.idG = artists.genre_id); SELECT * FROM compiled ORDER BY idA DESC;')
-  //     .then(function(data){
-  //         res.render('index', {title: "All Artists", data: data})
-  //     })
-  //     .catch(function(err){
-  //         console.log(err)
-  //         res.json(err)
-  //     });
-  // };
+  
 
   // var qtopic_id = parseInt(req.params.qtopic_id)
   db.any('DROP VIEW IF EXISTS compiled; CREATE VIEW compiled AS SELECT * FROM questions, answers WHERE (questions.qquestion_id = answers.aquestion_id); SELECT * FROM compiled')
