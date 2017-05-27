@@ -29,13 +29,13 @@ var db = pgp(connString);
 //   return t.batch([...dbArray]);
 // })
 createQuestion = (req,res,next) => {
-//   db.none('INSERT INTO questions(question, qtopic_id)' +
-// "values(${question}, ${qtopic_id})", req.body)
-db.task(t => {
-  var q1 = t.none('INSERT INTO questions(question, qtopic_id)' + "values(${question}, ${qtopic_id})", req.body)
-  var q2 = t.none('INSERT INTO answers(aquestion_id,atopic_id)' + "values(${aquestion_id}, ${atopic_id})",req.body)
-  t.batch([q1,q2])
-})
+  db.none("INSERT INTO questions(question, qtopic_id)" +
+"values(${question}, ${qtopic_id})", req.body)
+// db.task(t => {
+//   var q1 = t.none('INSERT INTO questions(question, qtopic_id)' + "values(${question}, ${qtopic_id})", req.body)
+//   var q2 = t.none('INSERT INTO answers(aquestion_id,atopic_id)' + "values(${aquestion_id}, ${atopic_id})",req.body)
+//   t.batch([q1,q2])
+// })
 .then(function (data) {
     res.status(200)
       .json({
@@ -46,11 +46,11 @@ db.task(t => {
   .catch(function (err) {
     return next(err);
   });
-}
+};
 
 createAnswer = (req,res,next) => {
-  db.none('INSERT INTO answers(answer, aquestion_id)' +
-  "values(${answer}, ${aquestion_id})", req.body)
+  db.none("INSERT INTO answers(answer, aquestion_id)" +
+  "values(${answer}, ${aquestion_id}")
   .then(function (data){
     res.status(200)
     .json({
@@ -345,10 +345,37 @@ deleteAnswer = (req,res,next) => {
   db.result('DELETE FROM answers WHERE answer_id=$1', answer_id)
 }
 
+deleteQuestion = (req,res,next) => {
+  var qquestion_id = parseInt(req.params.qquestion_id);
+  db.result('DELETE FROM questions WHERE qquestion_id=$1', qquestion_id)
+  .then(function(){
+    res.status(200)
+    .json({
+      status: 'success',
+      message: 'updated answer'
+    });
+  })
+  .catch(function(err){
+    return next(err);
+  });
+}
+//
+// deleteQuestion = (req,res,next) => {
+//   var qquestion_id = parseInt(req.params.qquestion_id);
+//   db.result('DELETE FROM questions where qquestion_id=$1',[qquestion_id])
+//   .then(function(data))
+// }
+//
+//
+// deleteDocumentation = (req,res,next) => {
+//
+// }
+
 
 
 
 module.exports = {
+  // deleteQuestion: deleteQuestion,
   getAllDocumentation: getAllDocumentation,
   getAllQuestions: getAllQuestions,
   getOneQuestion: getOneQuestion,
@@ -368,7 +395,8 @@ module.exports = {
   getAllNodeDocumentation: getAllNodeDocumentation,
   getAllExpressDocumentation: getAllExpressDocumentation,
   getAllReactDocumentation: getAllReactDocumentation,
-  getALlQuestionsBySubject: getALlQuestionsBySubject
+  getALlQuestionsBySubject: getALlQuestionsBySubject,
+  deleteQuestion: deleteQuestion
 
 };
 

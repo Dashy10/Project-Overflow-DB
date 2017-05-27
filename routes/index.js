@@ -30,6 +30,7 @@ router.get('/questions/:qtopic_id', db.getAllQuestionsBySubject);
 // router.get('/questions/:qquestion_id', db.findAnswers);
 // // update one question based on its id
 router.patch('/questions/:qquestion_id', db.updateQuestion);
+router.delete('/questions/:qquestion_id', db.deleteQuestion);
 //WHEN YOU POST YOU NEED TO WRITE A NEW QID AND NEW AQ ID THAT MATCH
 // YOU ALSO NEED TO WRITE IN A NEW ID THAT IS +1 TO THE OLD ID
 //
@@ -49,13 +50,13 @@ router.get('/QA/:subject_id',db.getAllQuestionsWithAnswersBySubject);
 // // ANSWERS
 // // all the answers in total are stored in this route
 router.get('/answers/', db.getAllAnswers);
-router.get('/answers/:answer_id', db.getOneAnswer);
+// router.get('/answers/:answer_id', db.getOneAnswer);
 // // post an answer that will be stored in this route
 router.post('/answers/', db.createAnswer);
 // // delete one answer based on its id
-router.delete('/answers/:answer_id', db.deleteAnswer);
+// router.delete('/answers/:answer_id', db.deleteAnswer);
 // // update one answer based on its id
-router.patch('/answers/:answer_id', db.updateAnswer);
+// router.patch('/answers/:answer_id', db.updateAnswer);
 
 
 
