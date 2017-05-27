@@ -71,8 +71,19 @@ createAnswer = (req,res,next) => {
 ////////////////////////////
 
 getALlQuestionsBySubject = (req,res,next) => {
-  var qquestion_id = parseInt(req.params.qquestion_id)
-  db.any('SELECT * FROM questions WHERE qtopic_id=$1',[qquestion_id])
+  var qtopic_id = parseInt(req.params.qtopic_id)
+  db.any('SELECT * FROM questions WHERE qtopic_id=$1',[qtopic_id])
+  .then(data => {
+    res.status(200)
+    .json({
+      status:'success',
+      data: data
+    });
+  })
+  .catch(function(err){
+    return next(err);
+  })
+
 }
 
 getAllQuestionsWithAnswers= (req,res,next) => {
@@ -350,6 +361,7 @@ module.exports = {
   updateQuestion: updateQuestion,
   updateAnswer: updateAnswer,
   getAllQuestionsWithAnswers: getAllQuestionsWithAnswers,
+  getAllQuestionsBySubject: getALlQuestionsBySubject,
   getAllQuestionsWithAnswersBySubject: getAllQuestionsWithAnswersBySubject,
   getOneQuestionWithAnswersBySubject: getOneQuestionWithAnswersBySubject,
   getAllJavaScriptDocumentation: getAllJavaScriptDocumentation,
