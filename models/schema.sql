@@ -47,7 +47,7 @@ DROP TABLE IF EXISTS answers CASCADE;
 
 CREATE TABLE answers
 (answer_id SERIAL PRIMARY KEY,
-  aquestion_id int REFERENCES questions(qquestion_id),
+  aquestion_id int REFERENCES questions(qquestion_id) ON DELETE CASCADE,
   atopic_id int REFERENCES subjects(subject_id),
   auser_id int REFERENCES users(user_id),
   answer TEXT,

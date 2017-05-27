@@ -352,7 +352,7 @@ deleteQuestion = (req,res,next) => {
     res.status(200)
     .json({
       status: 'success',
-      message: 'updated answer'
+      message: 'why this no work'
     });
   })
   .catch(function(err){
