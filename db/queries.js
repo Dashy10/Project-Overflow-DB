@@ -76,7 +76,7 @@ getALlQuestionsBySubject = (req,res,next) => {
 }
 
 getAllQuestionsWithAnswers= (req,res,next) => {
-  
+
 
   // var qtopic_id = parseInt(req.params.qtopic_id)
   db.any('DROP VIEW IF EXISTS compiled; CREATE VIEW compiled AS SELECT * FROM questions, answers WHERE (questions.qquestion_id = answers.aquestion_id); SELECT * FROM compiled')
@@ -98,19 +98,19 @@ getAllQuestionsWithAnswers= (req,res,next) => {
 };
 
 getAllQuestionsWithAnswersBySubject= (req,res,next) => {
-  db.task(t => {
+  // db.task(t => {
   var subject_id= parseInt(req.params.subject_id)
-  var q1 = db.any('DROP VIEW IF EXISTS compiled; CREATE VIEW compiled AS SELECT * FROM questions, answers WHERE questions.qquestion_id = answers.aquestion_id')
-  var q2 = db.any('SELECT * FROM compiled WHERE qtopic_id=$1',[subject_id])
-  return t.batch([q1,q2])
+  // var q1 = db.none('DROP VIEW IF EXISTS compiled; CREATE VIEW compiled AS SELECT * FROM questions, answers WHERE questions.qquestion_id = answers.aquestion_id')
+  // var q2 = db.any('SELECT * FROM compiled WHERE qtopic_id=$1',[subject_id])
+  // return t.batch([q2,q1]);
 
-  })
-  // 'SELECT * FROM questions; SELECT * FROM answers; JOIN answers ON questions.qquestion_id = answers.aquestion_id WHERE qtopic_id=$1'
+  // })
+  db.any('SELECT * FROM questions JOIN answers ON questions.qquestion_id = answers.aquestion_id WHERE qtopic_id=$1',[subject_id])
   .then(data => {
     console.log('This is data ======>',data);
+
     res.status(200)
     .json({
-      status: 'success',
       data: data
     });
   })
