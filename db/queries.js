@@ -18,14 +18,28 @@ var db = pgp(connString);
 //////////////Create/////////////////
 ////////////////////////////////////
 //////////////////////////////////
+// db.task(t => {
+//   var subject_id = parseInt(req.params.subject_id)
+//   var topic_id = parseInt(req.params.topic_id)
+//   var date_added = (req.params.date_added)
+//   var q1 = t.one('SELECT * FROM subjects WHERE subject_id=$1',[subject_id])
+//   var q2 = t.any('SELECT * FROM questions WHERE topic_id=$1 ORDER BY date_added DESC',[subject_id])
+//   var q3 = t.any('SELECT * FROM answers WHERE topic_id=$1 ORDER BY date_added DESC',[subject_id])
+//   var dbArray = [q1,q2,q3]
+//   return t.batch([...dbArray]);
+// })
 createQuestion = (req,res,next) => {
-  db.none('INSERT INTO questions(question, qtopic_id)' +
-"values(${question}, ${qtopic_id})", req.body)
+//   db.none('INSERT INTO questions(question, qtopic_id)' +
+// "values(${question}, ${qtopic_id})", req.body)
+db.task(t => {
+  var q1 = t.none('INSERT INTO questions(question, qtopic_id)' + "values(${question}, ${qtopic_id})", req.body)
+  var q2 = t.none('INSERT INTO answers(aquestion_id,atopic_id)' + "values(${aquestion_id}, ${atopic_id})",req.body)
+  t.batch([q1,q2])
+})
 .then(function (data) {
     res.status(200)
       .json({
         status: 'success',
-        data: data,
         message: 'Inserted one question'
       });
   })
@@ -56,21 +70,19 @@ createAnswer = (req,res,next) => {
 /////////////////////////////
 ////////////////////////////
 
-getAllQuestionsWithAnswersBySubject = (req,res,next) => {
-  // db.task(t => {
-  //   var subject_id = parseInt(req.params.subject_id)
-  //   var topic_id = parseInt(req.params.topic_id)
-  //   var date_added = (req.params.date_added)
-  //   var q1 = t.one('SELECT * FROM subjects WHERE subject_id=$1',[subject_id])
-  //   var q2 = t.any('SELECT * FROM questions WHERE topic_id=$1 ORDER BY date_added DESC',[subject_id])
-  //   var q3 = t.any('SELECT * FROM answers WHERE topic_id=$1 ORDER BY date_added DESC',[subject_id])
-  //   var dbArray = [q1,q2,q3]
-  //   return t.batch([...dbArray]);
-  // })
-  var subject_id = parseInt(req.params.subject_id)
-  db.any('SELECT * FROM questions JOIN answers ON questions.qquestion_id = answers.aquestion_id WHERE qtopic_id=$1', [subject_id])
+getALlQuestionsBySubject = (req,res,next) => {
+  var qquestion_id = parseInt(req.params.qquestion_id)
+  db.any('SELECT * FROM questions WHERE qtopic_id=$1',[qquestion_id])
+}
+
+getAllQuestionsWithAnswers= (req,res,next) => {
+
+
+  // var qtopic_id = parseInt(req.params.qtopic_id)
+  db.any('DROP VIEW IF EXISTS compiled; CREATE VIEW compiled AS SELECT * FROM questions, answers WHERE (questions.qquestion_id = answers.aquestion_id); SELECT * FROM compiled')
+  // 'SELECT * FROM questions; SELECT * FROM answers; JOIN answers ON questions.qquestion_id = answers.aquestion_id WHERE qtopic_id=$1'
   .then(data => {
-    console.log(data);
+    console.log('This is data ======>',data);
     res.status(200)
     .json({
       status: 'success',
@@ -85,15 +97,45 @@ getAllQuestionsWithAnswersBySubject = (req,res,next) => {
   })
 };
 
+getAllQuestionsWithAnswersBySubject= (req,res,next) => {
+  // db.task(t => {
+  var subject_id= parseInt(req.params.subject_id)
+  // var q1 = db.none('DROP VIEW IF EXISTS compiled; CREATE VIEW compiled AS SELECT * FROM questions, answers WHERE questions.qquestion_id = answers.aquestion_id')
+  // var q2 = db.any('SELECT * FROM compiled WHERE qtopic_id=$1',[subject_id])
+  // return t.batch([q2,q1]);
+
+  // })
+  db.any('SELECT * FROM questions JOIN answers ON questions.qquestion_id = answers.aquestion_id WHERE qtopic_id=$1',[subject_id])
+  .then(data => {
+    console.log('This is data ======>',data);
+
+    res.status(200)
+    .json({
+      data: data
+    });
+  })
+  .catch(function(err){
+    return next(err);
+  })
+};
+
+const findAnswers = (req, res, next) =>{
+  return db.any('SELECT * FROM answers JOIN questions ON answers.aquestion_id = questions.qquestion_id WHERE aquestion_id=$1', [req.params.qquestion_id]).then((data) =>{
+    res.json(data)
+  }).catch((error) =>{
+    console.log('answers error: ', error)
+  })
+}
+
 getOneQuestionWithAnswersBySubject = (req,res,next) => {
   db.task(t => {
     // var subject_id = parseInt(req.params.subject_id)
-    var qquestion_id = parseInt(req.params.qquestion_id)
+    var subject_id = parseInt(req.params.subject_id)
     // var topic_id = parseInt(req.params.topic_id)
     // var date_added = (req.params.date_added)
     // var q1 = t.one('SELECT * FROM subjects WHERE subject_id=$1',[subject_id])
-    var q2 = t.any('SELECT * FROM questions WHERE qquestion_id=$1 ORDER BY date_added DESC',[qquestion_id])
-    var q3 = t.any('SELECT * FROM answers WHERE aquestion_id=$1 ORDER BY date_added DESC',[qquestion_id])
+    var q2 = t.any('SELECT * FROM questions WHERE qquestion_id=$1',[subject_id])
+    var q3 = t.any('SELECT * FROM answers WHERE aquestion_id=$1',[subject_id])
     return t.batch([q2,q3]);
   })
   .then(data => {
@@ -302,16 +344,19 @@ module.exports = {
   getAllAnswers: getAllAnswers,
   getOneAnswer: getOneAnswer,
   deleteAnswer: deleteAnswer,
+  findAnswers: findAnswers,
   createQuestion: createQuestion,
   createAnswer: createAnswer,
   updateQuestion: updateQuestion,
   updateAnswer: updateAnswer,
+  getAllQuestionsWithAnswers: getAllQuestionsWithAnswers,
   getAllQuestionsWithAnswersBySubject: getAllQuestionsWithAnswersBySubject,
   getOneQuestionWithAnswersBySubject: getOneQuestionWithAnswersBySubject,
   getAllJavaScriptDocumentation: getAllJavaScriptDocumentation,
   getAllNodeDocumentation: getAllNodeDocumentation,
   getAllExpressDocumentation: getAllExpressDocumentation,
   getAllReactDocumentation: getAllReactDocumentation,
+  getALlQuestionsBySubject: getALlQuestionsBySubject
 
 };
 
