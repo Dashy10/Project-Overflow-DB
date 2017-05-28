@@ -72,7 +72,7 @@ createAnswer = (req,res,next) => {
 
 getALlQuestionsBySubject = (req,res,next) => {
   var qtopic_id = parseInt(req.params.qtopic_id)
-  db.any('SELECT * FROM questions WHERE qtopic_id=$1',[qtopic_id])
+  db.any('SELECT * FROM questions WHERE qtopic_id=$1 ORDER BY qdate_added DESC',[qtopic_id])
   .then(data => {
     res.status(200)
     .json({
@@ -239,7 +239,7 @@ getAllReactDocumentation = (req,res,next) => {
 };
 
 getAllQuestions = (req,res,next) => {
-  db.any('SELECT * FROM questions')
+  db.any('SELECT * FROM questions ORDER BY qdate_added DESC')
   .then(function(data){
     res.status(200)
     .json({
@@ -255,7 +255,7 @@ getAllQuestions = (req,res,next) => {
 
 getOneQuestion = (req,res,next) => {
   var qquestion_id = parseInt(req.params.qquestion_id);
-  db.one('SELECT * FROM questions WHERE qquestion_id=$1', qquestion_id)
+  db.one('SELECT * FROM questions WHERE qquestion_id=$1 ', qquestion_id)
   .then(function(data){
     res.status(200)
     .json({
