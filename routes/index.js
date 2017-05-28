@@ -6,7 +6,7 @@ var db = require('../db/queries');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'ProjectOverflow API Documentation' });
 });
 
 
