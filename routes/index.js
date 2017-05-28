@@ -52,7 +52,7 @@ router.get('/QA/:subject_id',db.getAllQuestionsWithAnswersBySubject);
 router.get('/answers/', db.getAllAnswers);
 // router.get('/answers/:answer_id', db.getOneAnswer);
 // // post an answer that will be stored in this route
-router.post('/answers/', db.createAnswer);
+router.post('/answers', db.createAnswer);
 // // delete one answer based on its id
 // router.delete('/answers/:answer_id', db.deleteAnswer);
 // // update one answer based on its id

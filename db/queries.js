@@ -48,22 +48,35 @@ createQuestion = (req,res,next) => {
   });
 };
 
+// createAnswer = (req,res,next) => {
+//   db.none('INSERT INTO answers(answer,aquestion_id)' + "VALUES(${answer}, ${aquestion_id})", req.body)
+//   .then(function(data){
+//     res.status(200)
+//     .json({
+//       status: 'success',
+//       data: data,
+//       message: 'Answer inserted'
+//     });
+//   })
+//   .catch(function (err) {
+//     return next(err);
+//   })
+// }
+
 createAnswer = (req,res,next) => {
-  db.none("INSERT INTO answers(answer, aquestion_id)" +
-  "values(${answer}, ${aquestion_id}")
-  .then(function (data){
+  db.none('INSERT INTO answers(answer)' + "VALUES(${answer})", req.body)
+  .then(function(data){
     res.status(200)
     .json({
       status: 'success',
       data: data,
-      message: 'Inserted one answer'
+      message: 'Answer inserted'
     });
   })
-  .catch(function(err){
+  .catch(function (err) {
     return next(err);
-  });
+  })
 }
-
 
 
 // //////////Read////////////
@@ -376,6 +389,7 @@ deleteQuestion = (req,res,next) => {
 
 module.exports = {
   // deleteQuestion: deleteQuestion,
+  createAnswer: createAnswer,
   getAllDocumentation: getAllDocumentation,
   getAllQuestions: getAllQuestions,
   getOneQuestion: getOneQuestion,
@@ -384,7 +398,6 @@ module.exports = {
   deleteAnswer: deleteAnswer,
   findAnswers: findAnswers,
   createQuestion: createQuestion,
-  createAnswer: createAnswer,
   updateQuestion: updateQuestion,
   updateAnswer: updateAnswer,
   getAllQuestionsWithAnswers: getAllQuestionsWithAnswers,
