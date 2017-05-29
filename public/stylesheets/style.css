@@ -25,3 +25,8 @@ margin-top: -50px;
 div{
   margin-bottom: 50px;
 }
+
+#flex-wrapper{
+  display: flex;
+  flex-direction: column;
+}

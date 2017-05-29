@@ -43,6 +43,3 @@ INSERT INTO answers(aquestion_id,answer,atopic_id)
   (3, 'Express is a framework for node.js dude',2),
   (4, 'React is stoopid',3),
   (5, 'Node.js is a test',4);
-
-
-  -- opsdajoipasjdopadajspodasdpoasjpo

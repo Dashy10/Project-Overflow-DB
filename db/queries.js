@@ -1,9 +1,13 @@
+// require bluebird
 var promise = require('bluebird');
 var options = {
   promiseLib: promise
 };
+// require pg-promise
 var pgp = require('pg-promise')();
+// this the database I'm working with
 var connString = process.env.DATABASE_URL;
+// store db in variable for methods
 var db = pgp(connString);
 
 
@@ -18,24 +22,13 @@ var db = pgp(connString);
 //////////////Create/////////////////
 ////////////////////////////////////
 //////////////////////////////////
-// db.task(t => {
-//   var subject_id = parseInt(req.params.subject_id)
-//   var topic_id = parseInt(req.params.topic_id)
-//   var date_added = (req.params.date_added)
-//   var q1 = t.one('SELECT * FROM subjects WHERE subject_id=$1',[subject_id])
-//   var q2 = t.any('SELECT * FROM questions WHERE topic_id=$1 ORDER BY date_added DESC',[subject_id])
-//   var q3 = t.any('SELECT * FROM answers WHERE topic_id=$1 ORDER BY date_added DESC',[subject_id])
-//   var dbArray = [q1,q2,q3]
-//   return t.batch([...dbArray]);
-// })
+
+// create a question by inserting into the questions table the question, further organized
+// by the question topic id
 createQuestion = (req,res,next) => {
   db.none("INSERT INTO questions(question, qtopic_id)" +
 "values(${question}, ${qtopic_id})", req.body)
-// db.task(t => {
-//   var q1 = t.none('INSERT INTO questions(question, qtopic_id)' + "values(${question}, ${qtopic_id})", req.body)
-//   var q2 = t.none('INSERT INTO answers(aquestion_id,atopic_id)' + "values(${aquestion_id}, ${atopic_id})",req.body)
-//   t.batch([q1,q2])
-// })
+
 .then(function (data) {
     res.status(200)
       .json({
@@ -48,21 +41,7 @@ createQuestion = (req,res,next) => {
   });
 };
 
-// createAnswer = (req,res,next) => {
-//   db.none('INSERT INTO answers(answer,aquestion_id)' + "VALUES(${answer}, ${aquestion_id})", req.body)
-//   .then(function(data){
-//     res.status(200)
-//     .json({
-//       status: 'success',
-//       data: data,
-//       message: 'Answer inserted'
-//     });
-//   })
-//   .catch(function (err) {
-//     return next(err);
-//   })
-// }
-
+// create an answer by simply inserting into answers table the answer value
 createAnswer = (req,res,next) => {
   db.none('INSERT INTO answers(answer)' + "VALUES(${answer})", req.body)
   .then(function(data){
@@ -83,6 +62,8 @@ createAnswer = (req,res,next) => {
 /////////////////////////////
 ////////////////////////////
 
+// acquire all questions further organized by qtopic_id parameter, further organized by the
+// the timestamp of the question in descending order
 getALlQuestionsBySubject = (req,res,next) => {
   var qtopic_id = parseInt(req.params.qtopic_id)
   db.any('SELECT * FROM questions WHERE qtopic_id=$1 ORDER BY qdate_added DESC',[qtopic_id])
@@ -99,9 +80,8 @@ getALlQuestionsBySubject = (req,res,next) => {
 
 }
 
+// a compiled view table that acquires all questions with their corresponding answers
 getAllQuestionsWithAnswers= (req,res,next) => {
-
-
   // var qtopic_id = parseInt(req.params.qtopic_id)
   db.any('DROP VIEW IF EXISTS compiled; CREATE VIEW compiled AS SELECT * FROM questions, answers WHERE (questions.qquestion_id = answers.aquestion_id); SELECT * FROM compiled')
   // 'SELECT * FROM questions; SELECT * FROM answers; JOIN answers ON questions.qquestion_id = answers.aquestion_id WHERE qtopic_id=$1'
@@ -121,6 +101,10 @@ getAllQuestionsWithAnswers= (req,res,next) => {
   })
 };
 
+// a joined table that acquires all questions, with their answers, organized further by subject_id
+// PLEASE TAKENOTE: Ran into serious issues here, posting to a joined table, and even a view table
+// proved to be incredible difficult. I could only post if specifying qquestion_id
+// couldn't solve that issue on the front end
 getAllQuestionsWithAnswersBySubject= (req,res,next) => {
   // db.task(t => {
   var subject_id= parseInt(req.params.subject_id)
@@ -143,6 +127,7 @@ getAllQuestionsWithAnswersBySubject= (req,res,next) => {
   })
 };
 
+// testing something out; a join with reverse logic to prior query
 const findAnswers = (req, res, next) =>{
   return db.any('SELECT * FROM answers JOIN questions ON answers.aquestion_id = questions.qquestion_id WHERE aquestion_id=$1', [req.params.qquestion_id]).then((data) =>{
     res.json(data)
@@ -151,15 +136,18 @@ const findAnswers = (req, res, next) =>{
   })
 }
 
-getOneQuestionWithAnswersBySubject = (req,res,next) => {
+// using task + batch method, which allows one to return multiple queries in array format
+// attempting to acquire only one question with corresponding answers by subject
+// success in acquiring; once again trouble posting to this route
+getOneQuestionWithAnswers = (req,res,next) => {
   db.task(t => {
     // var subject_id = parseInt(req.params.subject_id)
-    var subject_id = parseInt(req.params.subject_id)
+    var qquestion_id = parseInt(req.params.qquestion_id)
     // var topic_id = parseInt(req.params.topic_id)
     // var date_added = (req.params.date_added)
     // var q1 = t.one('SELECT * FROM subjects WHERE subject_id=$1',[subject_id])
-    var q2 = t.any('SELECT * FROM questions WHERE qquestion_id=$1',[subject_id])
-    var q3 = t.any('SELECT * FROM answers WHERE aquestion_id=$1',[subject_id])
+    var q2 = t.any('SELECT * FROM questions WHERE qquestion_id=$1',[qquestion_id])
+    var q3 = t.any('SELECT * FROM answers WHERE aquestion_id=$1',[qquestion_id])
     return t.batch([q2,q3]);
   })
   .then(data => {
@@ -383,7 +371,7 @@ deleteQuestion = (req,res,next) => {
   });
 }
 
-
+// export all methods
 module.exports = {
   createAnswer: createAnswer,
   getAllDocumentation: getAllDocumentation,
@@ -399,7 +387,7 @@ module.exports = {
   getAllQuestionsWithAnswers: getAllQuestionsWithAnswers,
   getAllQuestionsBySubject: getALlQuestionsBySubject,
   getAllQuestionsWithAnswersBySubject: getAllQuestionsWithAnswersBySubject,
-  getOneQuestionWithAnswersBySubject: getOneQuestionWithAnswersBySubject,
+  getOneQuestionWithAnswers: getOneQuestionWithAnswers,
   getAllJavaScriptDocumentation: getAllJavaScriptDocumentation,
   getAllNodeDocumentation: getAllNodeDocumentation,
   getAllExpressDocumentation: getAllExpressDocumentation,
@@ -407,3 +395,36 @@ module.exports = {
   getALlQuestionsBySubject: getALlQuestionsBySubject,
   deleteQuestion: deleteQuestion
 };
+
+
+// notes to myself (ignore)
+// db.task(t => {
+//   var subject_id = parseInt(req.params.subject_id)
+//   var topic_id = parseInt(req.params.topic_id)
+//   var date_added = (req.params.date_added)
+//   var q1 = t.one('SELECT * FROM subjects WHERE subject_id=$1',[subject_id])
+//   var q2 = t.any('SELECT * FROM questions WHERE topic_id=$1 ORDER BY date_added DESC',[subject_id])
+//   var q3 = t.any('SELECT * FROM answers WHERE topic_id=$1 ORDER BY date_added DESC',[subject_id])
+//   var dbArray = [q1,q2,q3]
+//   return t.batch([...dbArray]);
+// })
+// db.task(t => {
+//   var q1 = t.none('INSERT INTO questions(question, qtopic_id)' + "values(${question}, ${qtopic_id})", req.body)
+//   var q2 = t.none('INSERT INTO answers(aquestion_id,atopic_id)' + "values(${aquestion_id}, ${atopic_id})",req.body)
+//   t.batch([q1,q2])
+// })
+
+// createAnswer = (req,res,next) => {
+//   db.none('INSERT INTO answers(answer,aquestion_id)' + "VALUES(${answer}, ${aquestion_id})", req.body)
+//   .then(function(data){
+//     res.status(200)
+//     .json({
+//       status: 'success',
+//       data: data,
+//       message: 'Answer inserted'
+//     });
+//   })
+//   .catch(function (err) {
+//     return next(err);
+//   })
+// }
