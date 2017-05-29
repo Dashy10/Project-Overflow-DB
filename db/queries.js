@@ -107,13 +107,14 @@ getAllQuestionsWithAnswers= (req,res,next) => {
 // couldn't solve that issue on the front end
 getAllQuestionsWithAnswersBySubject= (req,res,next) => {
   // db.task(t => {
+  var question_sub = req.params.question_sub;
   var subject_id= parseInt(req.params.subject_id)
   // var q1 = db.none('DROP VIEW IF EXISTS compiled; CREATE VIEW compiled AS SELECT * FROM questions, answers WHERE questions.qquestion_id = answers.aquestion_id')
   // var q2 = db.any('SELECT * FROM compiled WHERE qtopic_id=$1',[subject_id])
   // return t.batch([q2,q1]);
 
   // })
-  db.any('SELECT * FROM questions JOIN answers ON questions.qquestion_id = answers.aquestion_id WHERE qtopic_id=$1',[subject_id])
+  db.any('SELECT * FROM questions JOIN answers ON questions.qquestion_id = answers.aquestion_id WHERE question_sub=$1',[question_sub])
   .then(data => {
     console.log('This is data ======>',data);
 

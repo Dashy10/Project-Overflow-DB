@@ -6,7 +6,7 @@ INSERT INTO subjects(subject)
   ('javascript'),
   ('express'),
   ('react'),
-  ('node.js');
+  ('node');
 
 INSERT INTO documentation(main_topic,topic,url,main_tag,rel_tag_one,rel_tag_two)
     VALUES
@@ -26,13 +26,13 @@ INSERT INTO documentation(main_topic,topic,url,main_tag,rel_tag_one)
   ('React.js','React official documentation','https://facebook.github.io/react/docs/hello-world.html',3,1);
 
 
-INSERT INTO questions(question,qtopic_id)
+INSERT INTO questions(question,qtopic_id,question_sub)
     VALUES
-  ('What is JavaScript?',1),
-  ('What really is JavaScript?',1),
-  ('What is Express?',2),
-  ('What is React?',3),
-  ('What is Node.js?',4);
+  ('What is JavaScript?',1,'javascript'),
+  ('What really is JavaScript?',1,'javascript'),
+  ('What is Express?',2,'express'),
+  ('What is React?',3,'react'),
+  ('What is Node.js?',4,'node');
 
 INSERT INTO answers(aquestion_id,answer,atopic_id)
     VALUES

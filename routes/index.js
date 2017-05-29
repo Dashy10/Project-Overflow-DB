@@ -35,7 +35,7 @@ router.post('/questions',db.createQuestion);
 // get all questions with answers
 router.get('/QA',db.getAllQuestionsWithAnswers);
 // get all questions with answers by subject
-router.get('/QA/:subject_id',db.getAllQuestionsWithAnswersBySubject);
+router.get('/QA/:question_sub',db.getAllQuestionsWithAnswersBySubject);
 // get one question with answers
 router.get('/QAS/:qquestion_id',db.getOneQuestionWithAnswers);
 
