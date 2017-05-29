@@ -56,7 +56,7 @@ router.post('/answers', db.createAnswer);
 // // delete one answer based on its id
 router.delete('/answers/:answer_id', db.deleteAnswer);
 // // update one answer based on its id
-// router.patch('/answers/:answer_id', db.updateAnswer);
+router.patch('/answers/:answer_id', db.updateAnswer);
 
 
 

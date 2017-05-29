@@ -6,10 +6,14 @@
     <style>
     div {
       opacity: 0.7;
-      width: 500px;
+      width: 550px;
       height: 20px;
+      color: white;
       /*font-weight: bolder;*/
       /*text-align: center;*/
+    }
+    h3 {
+      text-decoration: underline;
     }
     </style>
   </head>
@@ -26,14 +30,62 @@
     <h3>GET ALL ANSWERS</h3>
     <div style='background-color:green' width:'100px'> GET https://project-overflow-db.herokuapp.com/answers</div>
     <h3>HOW TO CREATE A QUESTION</h3>
-    <div style='background-color:blue' width:'100px'> POST https://project-overflow-db.herokuapp.com/questions</div>
-    <h3>JSON:</h3>
+    <div style='background-color:blue' width:'100px' height: '300px'> POST https://project-overflow-db.herokuapp.com/questions</div>
+    <h4>JSON:</h4>
     <code>
       {
       "question": "the question", <br />
       "qtopic_id": "1" <br />
     }
-    </code>
+  </code> <br /> <br />
+    <h3> HOW TO CREATE AN ANSWER </h3>
+    <div style='background-color:blue' width:'100px'> POST https://project-overflow-db.herokuapp.com/answers</div>
+    <h4>JSON:</h4>
+    <code>
+      {
+      "answer": "the answer", <br />
+    }
+  </code>
+    <h3> HOW TO UPDATE A QUESTION </h3>
+    <div style='background-color:grey' width:'100px' height: '300px'> PATCH https://project-overflow-db.herokuapp.com/questions</div>
+
+    <h4>JSON:</h4>
+    <code>
+      {
+      "qquestion_id": "# qquestion_id", <br />
+      "question": "the question to be updated"
+    }
+  </code>
+    <h3> HOW TO UPDATE AN ANSWER </h3>
+    <div style='background-color:grey' width:'100px' height: '300px'> PATCH https://project-overflow-db.herokuapp.com/questions</div>
+
+    <h4>JSON:</h4>
+    <code>
+      {
+      "answer": "the answer to be updated", <br />
+      "aquestion_id": "# of aquestion_id to be updated"
+    }
+  </code>
+    <h3> HOW TO DELETE A QUESTION </h3>
+    <div style='background-color:red' width:'100px' height: '300px'> DELETE https://project-overflow-db.herokuapp.com/questions/qquestion_id</div>
+
+    <h4>JSON:</h4>
+    <code>
+      {
+      "qquestion_id": "# qquestion_id", <br />
+    }
+  </code>
+    <h3> HOW TO DELETE AN ANSWER </h3>
+    <div style='background-color:red' width:'100px' height: '300px'> DELETE https://project-overflow-db.herokuapp.com/answers/:answer_id</div>
+    <h4>JSON:</h4>
+    <code>
+      {
+      "answer_id": "# of answer_id" <br />
+    }
+  </code>
+
+
+
 
 
 
