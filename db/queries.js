@@ -356,6 +356,16 @@ updateAnswer = (req,res,next) => {
 deleteAnswer = (req,res,next) => {
   var answer_id = parseInt(req.params.answer_id);
   db.result('DELETE FROM answers WHERE answer_id=$1', answer_id)
+  .then(function(){
+    res.status(200)
+    .json({
+      status: 'success',
+      message: 'answer deleted'
+    });
+  })
+  .catch(function(err){
+    return next(err);
+  });
 }
 
 deleteQuestion = (req,res,next) => {
@@ -365,30 +375,16 @@ deleteQuestion = (req,res,next) => {
     res.status(200)
     .json({
       status: 'success',
-      message: 'why this no work'
+      message: 'question deleted'
     });
   })
   .catch(function(err){
     return next(err);
   });
 }
-//
-// deleteQuestion = (req,res,next) => {
-//   var qquestion_id = parseInt(req.params.qquestion_id);
-//   db.result('DELETE FROM questions where qquestion_id=$1',[qquestion_id])
-//   .then(function(data))
-// }
-//
-//
-// deleteDocumentation = (req,res,next) => {
-//
-// }
-
-
 
 
 module.exports = {
-  // deleteQuestion: deleteQuestion,
   createAnswer: createAnswer,
   getAllDocumentation: getAllDocumentation,
   getAllQuestions: getAllQuestions,
@@ -410,9 +406,4 @@ module.exports = {
   getAllReactDocumentation: getAllReactDocumentation,
   getALlQuestionsBySubject: getALlQuestionsBySubject,
   deleteQuestion: deleteQuestion
-
 };
-
-
-////asdsadsadsadasdasdasdasds
-///sdasdadsdas
