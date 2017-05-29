@@ -43,7 +43,7 @@ createQuestion = (req,res,next) => {
 
 // create an answer by simply inserting into answers table the answer value
 createAnswer = (req,res,next) => {
-  db.none('INSERT INTO answers(answer)' + "VALUES(${answer})", req.body)
+  db.none('INSERT INTO answers(answer,aquestion_id)' + "VALUES(${answer}, ${aquestion_id})", req.body)
   .then(function(data){
     res.status(200)
     .json({
