@@ -26,8 +26,8 @@ var db = pgp(connString);
 // create a question by inserting into the questions table the question, further organized
 // by the question topic id
 createQuestion = (req,res,next) => {
-  db.none("INSERT INTO questions(question, qtopic_id)" +
-"values(${question}, ${qtopic_id})", req.body)
+  db.none("INSERT INTO questions(question, qtopic_id, question_sub)" +
+"values(${question}, ${qtopic_id}, ${question_sub})", req.body)
 
 .then(function (data) {
     res.status(200)
