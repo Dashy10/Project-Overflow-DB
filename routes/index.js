@@ -25,7 +25,7 @@ router.get('/documentation/react', db.getAllReactDocumentation);
 // all the questions are stored on this route
 router.get('/questions', db.getAllQuestions);
 // get all questions by subject
-router.get('/questions/:qtopic_id', db.getAllQuestionsBySubject);
+router.get('/questions/:question_sub', db.getAllQuestionsBySubject);
 // // update one question based on its id
 router.patch('/questions/:qquestion_id', db.updateQuestion);
 // delete a question based on its id

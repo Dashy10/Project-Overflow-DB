@@ -65,8 +65,8 @@ createAnswer = (req,res,next) => {
 // acquire all questions further organized by qtopic_id parameter, further organized by the
 // the timestamp of the question in descending order
 getALlQuestionsBySubject = (req,res,next) => {
-  var qtopic_id = parseInt(req.params.qtopic_id)
-  db.any('SELECT * FROM questions WHERE qtopic_id=$1 ORDER BY qdate_added DESC',[qtopic_id])
+  var question_sub = (req.params.question_sub)
+  db.any('SELECT * FROM questions WHERE question_sub=$1 ORDER BY qdate_added DESC',[question_sub])
   .then(data => {
     res.status(200)
     .json({
