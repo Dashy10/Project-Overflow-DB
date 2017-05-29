@@ -39,9 +39,9 @@ CREATE TABLE questions
 (qquestion_id SERIAL PRIMARY KEY,
 qdate_added timestamp default now(),
 question TEXT,
-quser_id int REFERENCES users(user_id),
-qtopic_id int REFERENCES subjects(subject_id)
-
+qtopic_id int REFERENCES subjects(subject_id) ON DELETE CASCADE,
+question_sub TEXT,
+quser_id int REFERENCES users(user_id)
  );
 
 DROP TABLE IF EXISTS answers CASCADE;
