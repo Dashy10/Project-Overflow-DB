@@ -64,9 +64,26 @@ createAnswer = (req,res,next) => {
 
 // acquire all questions further organized by qtopic_id parameter, further organized by the
 // the timestamp of the question in descending order
+// getALlQuestionsBySubject = (req,res,next) => {
+//   var question_sub = (req.params.question_sub)
+//   db.any('SELECT * FROM questions WHERE question_sub=$1 ORDER BY qdate_added DESC',[question_sub])
+//   .then(data => {
+//     res.status(200)
+//     .json({
+//       status:'success',
+//       data: data
+//     });
+//   })
+//   .catch(function(err){
+//     return next(err);
+//   })
+//
+// }
+
 getALlQuestionsBySubject = (req,res,next) => {
-  var question_sub = (req.params.question_sub)
-  db.any('SELECT * FROM questions WHERE question_sub=$1 ORDER BY qdate_added DESC',[question_sub])
+  var question_sub = req.params.question_sub
+  console.log('Whats this showing', req.params.question_sub);
+  db.any('SELECT * FROM questions WHERE question_sub=$1',[question_sub])
   .then(data => {
     res.status(200)
     .json({
@@ -77,7 +94,6 @@ getALlQuestionsBySubject = (req,res,next) => {
   .catch(function(err){
     return next(err);
   })
-
 }
 
 // a compiled view table that acquires all questions with their corresponding answers

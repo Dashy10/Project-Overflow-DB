@@ -26,18 +26,18 @@ INSERT INTO documentation(main_topic,topic,url,main_tag,rel_tag_one)
   ('React.js','React official documentation','https://facebook.github.io/react/docs/hello-world.html',3,1);
 
 
-INSERT INTO questions(question,qtopic_id,question_sub)
-    VALUES
-  ('What is JavaScript?',1, 'javascript'),
-  ('What really is JavaScript?',1, 'javascript'),
-  ('What is Express?',2, 'express'),
-  ('What is React?',3, 'react'),
-  ('What is Node.js?',4, 'node'),
-  ('Is Node javascript?',4, 'node'),
-  ('IS React javascript?',3, 'react'),
-  ('Is Express js?',4, 'express'),
-  ('How do they work in js?',1, 'javascript'),
-  ('Hows react work with node?',3, 'react');
+  INSERT INTO questions(question,qtopic_id,question_sub)
+      VALUES
+    ('What is JavaScript?',1, 'javascript'),
+    ('What really is JavaScript?',1, 'javascript'),
+    ('What is Express?',2, 'express'),
+    ('What is React?',3, 'react'),
+    ('What is Node.js?',4, 'node'),
+    ('Is Node javascript?',4, 'node'),
+    ('IS React javascript?',3, 'react'),
+    ('Is Express js?',4, 'express'),
+    ('How do they work in js?',1, 'javascript'),
+    ('Hows react work with node?',3, 'react');
 
 INSERT INTO answers(aquestion_id,answer,atopic_id)
     VALUES
