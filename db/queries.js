@@ -318,8 +318,8 @@ getOneAnswer = (req,res,next) => {
 //////////////////////////
 //////////////////////////
 updateQuestion = (req,res,next) => {
-  db.none('UPDATE questions SET question=$1, qtopic_id=$2',
-  [req.body.question, req.body.qtopic_id])
+  db.none('UPDATE questions SET question=$1 WHERE qquestion_id=$2',
+  [req.body.question, req.params.qquestion_id])
   .then(function(){
     res.status(200)
     .json({
