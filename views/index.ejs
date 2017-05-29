@@ -35,8 +35,19 @@
     <h1 style='font-size:35pt'><%= title %></h1>
     <span><a style="text-decoration:none" href='https://www.google.com'>Click here to view the live application</a><span> <br /> <br />
     <span>Welcome to the official ProjectOverflow API.</span> <br /> <br />
-    <span><b>NOTE:</b> No authentication is required to make use of this API. Feel free to contribute, edit, or delete as much as you want! <br /> <br /> <b>Updates Coming Soon</b></span>
+    <span><b>UPDATE 5-22-17</b> No authentication is required to make use of this API. Feel free to contribute, edit, or delete as much as you want! <br /> <br />
+    <span><b>UPDATE 5-22-17</b> question_sub parameter values currently supported are: [javascript,react,express,node] </span> <br /> <br />
+    <span><b>UPDATE 5-22-17</b> documentation parameter values currently supported are: [javascript,react,express,nodejs] </span> <br /> <br />
+    <span><b>UPDATE 5-25-17</b> Creating, updating and deleting documentation is not currently supported. </span> <br /> <br />
+
+      <b>Updates Coming Soon</b></span>
+
     <h2>HOW TO USE:</h2>
+    <h3>GET ALL DOCUMENTATION</h3>
+    <div style='background-color:green'> GET https://project-overflow-db.herokuapp.com/documentation</div>
+    <h3>GET ALL DOCUMENTATION BY SUBJECT</h3>
+    <div style='background-color:green'> GET https://project-overflow-db.herokuapp.com/documentation/:subject</div>
+
     <h3>GET ALL QUESTIONS</h3>
     <div style='background-color:green'> GET https://project-overflow-db.herokuapp.com/questions</div>
     <h3>GET ALL QUESTIONS BY SUBJECT</h3>
