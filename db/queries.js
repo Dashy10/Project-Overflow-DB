@@ -83,7 +83,7 @@ createAnswer = (req,res,next) => {
 getALlQuestionsBySubject = (req,res,next) => {
   var question_sub = req.params.question_sub
   console.log('Whats this showing', req.params.question_sub);
-  db.any('SELECT * FROM questions WHERE question_sub=$1',[question_sub])
+  db.any('SELECT * FROM questions WHERE question_sub=$1 ORDER BY qdate_added DESC ',[question_sub])
   .then(data => {
     res.status(200)
     .json({
