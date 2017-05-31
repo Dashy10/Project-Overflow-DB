@@ -20,10 +20,11 @@
     }
     footer {
       background-color:rgb(26,26,26);
-  opacity: .7,
-  color: white,
-  height: 70,
-  text-align: center,
+  opacity: .7;
+  color: white;
+  height: 70;
+  text-align: center;
+  /*position: absolute;*/
   padding: 1% 0 5% 0,
   right: 0,
   bottom: 0,
@@ -32,7 +33,7 @@
     </style>
   </head>
   <body>
-    
+
     <h1 style='font-size:35pt'><%= title %></h1>
     <span><a style="text-decoration:none" href='https://www.google.com'>Click here to view the live application</a><span> <br /> <br />
     <span>Welcome to the official ProjectOverflow API.</span> <br /> <br />
@@ -80,7 +81,7 @@
     }
   </code>
     <h3> HOW TO UPDATE A QUESTION </h3>
-    <div style='background-color:grey' width:'100px' height: '300px'> PATCH https://project-overflow-db.herokuapp.com/questions</div>
+    <div style='background-color:grey' width:'100px' height: '300px'> PATCH https://project-overflow-db.herokuapp.com/questions/:qquestion_id</div>
 
     <h4>JSON:</h4>
     <code>
@@ -90,13 +91,13 @@
     }
   </code>
     <h3> HOW TO UPDATE AN ANSWER </h3>
-    <div style='background-color:grey' width:'100px' height: '300px'> PATCH https://project-overflow-db.herokuapp.com/questions</div>
+    <div style='background-color:grey' width:'100px' height: '300px'> PATCH https://project-overflow-db.herokuapp.com/answers/answer_id</div>
 
     <h4>JSON:</h4>
     <code>
       {
       "answer": "the answer to be updated", <br />
-      "aquestion_id": "# of aquestion_id to be updated"
+      "answer_id": "# of answer_id to be updated"
     }
   </code>
     <h3> HOW TO DELETE A QUESTION </h3>
